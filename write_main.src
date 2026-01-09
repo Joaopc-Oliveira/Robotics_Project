@@ -21,5 +21,4 @@ DEF write_main( )
    ELSE
       MSG_T("Keyboard cancelled / not available")
    ENDIF
-
 END
