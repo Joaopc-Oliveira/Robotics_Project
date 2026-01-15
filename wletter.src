@@ -6,41 +6,38 @@
 
 DEF writingLetters( )
 
-   DECL INT I
    DECL CHAR TEXT[32]
 
    BAS (#INITMOV,0)
 
-   ; Tool/Base (ajusta para os teus índices)
+   ; Ajusta para os teus índices reais
    $TOOL = TOOL_DATA[14]
    $BASE = BASE_DATA[14]
 
-   ; Motion tuning
+   ; Motion tuning (valores vêm do .DAT)
    $VEL.CP   = DRAW_VEL_CP
    $ACC.CP   = DRAW_ACC_CP
    $APO.CDIS = BLEND_CDIS
    $ADVANCE  = ADVANCE_RUN
 
-   ; Home
+   ; HOME
    PTP XHOME
 
-   ; Go to start area (safe Z up)
+   ; Vai para origem do texto em Z seguro
    LIN START_POS
    LIN {X START_POS.X, Y START_POS.Y, Z Z_UP, A START_POS.A, B START_POS.B, C START_POS.C}
 
-   ; --- Text source ---
-   ; Option 1: edit TEXT in DAT by editing variable DEFAULT_TEXT[]
-   ; Option 2: write here
+   ; Texto default
    TEXT[] = DEFAULT_TEXT[]
 
-   ; Reset writing offsets
+   ; Reset offsets
    OFFSET_X = 0.0
    OFFSET_Y = 0.0
 
-   ; Draw
+   ; Desenhar
    DrawText(TEXT[])
 
-   ; Back to home
+   ; Volta HOME
    PTP XHOME
 
 END
@@ -57,7 +54,6 @@ DEF DrawText(STR[] : IN)
    FOR K = 1 TO STRLEN(STR[])
       CH = STR[K]
 
-      ; ignore spaces
       IF CH == ' ' THEN
          NEXT_CHAR()
       ELSE
@@ -85,7 +81,7 @@ DEF DrawChar(CH : IN)
    CASE 'F'
       DRAW_F()
    DEFAULT
-      ; unknown -> just skip
+      ; ignora caracteres não suportados
    ENDSWITCH
 END
 
@@ -95,7 +91,6 @@ END
 ; =========================
 DEF NEXT_CHAR()
    OFFSET_X = OFFSET_X + (CHAR_SPACING * SCALE)
-   ; small lift to avoid dragging between chars
    LIN_REL {Z 20.0} C_DIS
 END
 
@@ -109,7 +104,7 @@ DEF PEN_DOWN(GOAL :IN)
 
    P = GOAL
    P.Z = Z_DOWN
-   LIN P
+   LIN P C_DIS
 END
 
 
@@ -123,7 +118,7 @@ DEF PEN_UP(GOAL :IN)
 END
 
 
-; Unified move to XY with current pen state coming from point flag
+; Move para XY por cima e decide pen up/down
 DEF MOVE_POINT(XY :IN, DOWN :IN)
    DECL POS XY
    DECL BOOL DOWN
@@ -132,7 +127,7 @@ DEF MOVE_POINT(XY :IN, DOWN :IN)
    P = XY
    P.Z = Z_UP
 
-   ; move above target with blending
+   ; aproxima por cima com blending
    LIN P C_DIS
 
    IF DOWN THEN
@@ -145,7 +140,6 @@ END
 
 ; =========================
 ;  LETTERS A-F
-;  Each uses arrays in .DAT
 ; =========================
 DEF DRAW_A()
    DECL INT I
@@ -155,7 +149,6 @@ DEF DRAW_A()
       T = START_POS
       T.X = START_POS.X + OFFSET_X + (CHAR_A[I].X * SCALE)
       T.Y = START_POS.Y + OFFSET_Y + (CHAR_A[I].Y * SCALE)
-
       MOVE_POINT(T, CHAR_A[I].PEN_DOWN)
    ENDFOR
 
@@ -171,7 +164,6 @@ DEF DRAW_B()
       T = START_POS
       T.X = START_POS.X + OFFSET_X + (CHAR_B[I].X * SCALE)
       T.Y = START_POS.Y + OFFSET_Y + (CHAR_B[I].Y * SCALE)
-
       MOVE_POINT(T, CHAR_B[I].PEN_DOWN)
    ENDFOR
 
@@ -187,7 +179,6 @@ DEF DRAW_C()
       T = START_POS
       T.X = START_POS.X + OFFSET_X + (CHAR_C[I].X * SCALE)
       T.Y = START_POS.Y + OFFSET_Y + (CHAR_C[I].Y * SCALE)
-
       MOVE_POINT(T, CHAR_C[I].PEN_DOWN)
    ENDFOR
 
@@ -203,7 +194,6 @@ DEF DRAW_D()
       T = START_POS
       T.X = START_POS.X + OFFSET_X + (CHAR_D[I].X * SCALE)
       T.Y = START_POS.Y + OFFSET_Y + (CHAR_D[I].Y * SCALE)
-
       MOVE_POINT(T, CHAR_D[I].PEN_DOWN)
    ENDFOR
 
@@ -219,7 +209,6 @@ DEF DRAW_E()
       T = START_POS
       T.X = START_POS.X + OFFSET_X + (CHAR_E[I].X * SCALE)
       T.Y = START_POS.Y + OFFSET_Y + (CHAR_E[I].Y * SCALE)
-
       MOVE_POINT(T, CHAR_E[I].PEN_DOWN)
    ENDFOR
 
@@ -235,7 +224,6 @@ DEF DRAW_F()
       T = START_POS
       T.X = START_POS.X + OFFSET_X + (CHAR_F[I].X * SCALE)
       T.Y = START_POS.Y + OFFSET_Y + (CHAR_F[I].Y * SCALE)
-
       MOVE_POINT(T, CHAR_F[I].PEN_DOWN)
    ENDFOR
 
