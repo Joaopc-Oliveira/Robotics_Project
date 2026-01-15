@@ -1,0 +1,169 @@
+&ACCESS RVP
+&REL 1
+&PARAM EDITMASK = *
+
+DEF WRITE_NAME( )
+
+   ; =========================
+   ; INIT
+   ; =========================
+   BAS(#INITMOV,0)
+
+   $TOOL = TOOL_PEN
+   $BASE = BASE_PAPER
+
+   $VEL.CP = 0.1
+   $ACC.CP = 1.0
+
+   ; đi tới điểm bắt đầu
+   LIN {X 0, Y 0, Z 20}
+
+   ; =========================
+   ; ---- THAO ----
+   ; =========================
+
+   ; T
+   LIN_REL {Z -20}        ; pen down
+   LIN_REL {X 30}
+   LIN_REL {Z 20}         ; pen up
+   LIN_REL {X -15}
+   LIN_REL {Y -40}
+   LIN_REL {Z -20}
+   LIN_REL {Z 40}
+   LIN_REL {Z 20}
+
+   LIN_REL {X 25}
+
+   ; H
+   LIN_REL {Y 0}
+   LIN_REL {Z -20}
+   LIN_REL {Y -40}
+   LIN_REL {Z 20}
+   LIN_REL {Y 20}
+   LIN_REL {Z -20}
+   LIN_REL {X 25}
+   LIN_REL {Z 20}
+   LIN_REL {X -25}
+   LIN_REL {Y -20}
+   LIN_REL {Z -20}
+   LIN_REL {Y 40}
+   LIN_REL {Z 20}
+
+   LIN_REL {X 35}
+
+   ; A (Spline)
+   LIN_REL {Z -20}
+   SPLINE
+      SPL_REL {X 10, Y -40}
+      SPL_REL {X 10, Y 40}
+   ENDSPLINE
+   LIN_REL {Z 20}
+   LIN_REL {Y -20}
+   LIN_REL {Z -20}
+   LIN_REL {X 20}
+   LIN_REL {Z 20}
+
+   LIN_REL {X 35}
+
+   ; O
+   LIN_REL {Z -20}
+   SPLINE
+      SPL_REL {X 10, Y -10}
+      SPL_REL {X 0,  Y -20}
+      SPL_REL {X -10,Y -10}
+      SPL_REL {X -10,Y 10}
+      SPL_REL {X 0,  Y 20}
+      SPL_REL {X 10, Y 10}
+   ENDSPLINE
+   LIN_REL {Z 20}
+
+   ; =========================
+   ; SPACE
+   ; =========================
+   LIN_REL {X 50}
+
+   ; =========================
+   ; ---- ANNE ----
+   ; =========================
+
+   ; A
+   LIN_REL {Z -20}
+   LIN_REL {X 15, Y -40}
+   LIN_REL {X 15, Y 40}
+   LIN_REL {Z 20}
+   LIN_REL {Y -20}
+   LIN_REL {Z -20}
+   LIN_REL {X 20}
+   LIN_REL {Z 20}
+
+   LIN_REL {X 30}
+
+   ; N
+   LIN_REL {Z -20}
+   LIN_REL {Y -40}
+   LIN_REL {X 20, Y 40}
+   LIN_REL {Y -40}
+   LIN_REL {Z 20}
+
+   LIN_REL {X 30}
+
+   ; N
+   LIN_REL {Z -20}
+   LIN_REL {Y -40}
+   LIN_REL {X 20, Y 40}
+   LIN_REL {Y -40}
+   LIN_REL {Z 20}
+
+   LIN_REL {X 30}
+
+   ; E
+   LIN_REL {Z -20}
+   LIN_REL {Y -40}
+   LIN_REL {X 20}
+   LIN_REL {Z 20}
+   LIN_REL {X -20}
+   LIN_REL {Y 20}
+   LIN_REL {Z -20}
+   LIN_REL {X 15}
+   LIN_REL {Z 20}
+   LIN_REL {X -15}
+   LIN_REL {Y 20}
+   LIN_REL {Z -20}
+   LIN_REL {X 20}
+   LIN_REL {Z 20}
+
+   ; =========================
+   ; END
+   ; =========================
+   LIN {Z 20}
+
+END
+
+—---------------------DAT—-------------------------------------------------------------------------------
+
+&ACCESS RVP
+&REL 1
+&PARAM EDITMASK = *
+
+DEFDAT WRITE_NAME PUBLIC
+
+   ; =========================
+   ; TOOL & BASE
+   ; =========================
+   DECL FRAME TOOL_PEN
+   DECL FRAME BASE_PAPER
+
+   TOOL_PEN = {X 0, Y 0, Z 150, A 0, B 0, C 0}
+   BASE_PAPER = {X 600, Y 0, Z 0, A 0, B 0, C 0}
+
+   ; =========================
+   ; HEIGHTS
+   ; =========================
+   DECL REAL Z_UP 
+   DECL REAL Z_DOWN
+
+   Z_UP   = 20
+   Z_DOWN = 0
+
+ENDDAT
+

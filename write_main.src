@@ -1,0 +1,24 @@
+&ACCESS RV
+&PARAM EDITMASK = *
+&PARAM TEMPLATE = C:\KRC\Roboter\Template\vorgabe
+DEF write_main( )
+   DECL CHAR USER_TEXT[32]
+   DECL INT RET, STAT, MODE
+
+   EXT DEF DrawText_STUVWXYZ(CHAR[]:IN)
+
+   $BASE = BASE_DATA[10]
+   $TOOL = TOOL_DATA[10]
+
+   USER_TEXT[] = ""
+
+   MSG_T("Enter text using the keyboard and confirm")
+
+   CWRITE($CMD, STAT, MODE, "KUKA.Keyboard", USER_TEXT[], RET)
+
+   IF RET >= 0 THEN
+      DrawText_STUVWXYZ(USER_TEXT[])
+   ELSE
+      MSG_T("Keyboard cancelled / not available")
+   ENDIF
+END
