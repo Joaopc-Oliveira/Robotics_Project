@@ -1,0 +1,134 @@
+&ACCESS RVP
+&REL 10
+&PARAM EDITMASK = *
+&PARAM TEMPLATE = C:\KRC\Roboter\Template\vorgabe
+&PARAM DISKPATH = KRC:\R1\Program\Projekte
+
+DEFDAT writingLetters
+
+   ; ====== CONFIG ======
+   DECL REAL SCALE
+   DECL REAL OFFSET_X
+   DECL REAL OFFSET_Y
+
+   DECL REAL Z_UP
+   DECL REAL Z_DOWN
+
+   DECL REAL CHAR_SPACING
+
+   DECL REAL DRAW_VEL_CP
+   DECL REAL DRAW_ACC_CP
+   DECL REAL BLEND_CDIS
+   DECL INT  ADVANCE_RUN
+
+   DECL CHAR DEFAULT_TEXT[32]
+
+   ; Start pose (where the text origin is)
+   DECL POS START_POS
+
+   ; ====== POINT TYPE ======
+   STRUC CHARPT REAL X, REAL Y, BOOL PEN_DOWN
+
+   ; ====== LETTER ARRAYS ======
+   DECL INT CHAR_A_N
+   DECL CHARPT CHAR_A[12]
+
+   DECL INT CHAR_B_N
+   DECL CHARPT CHAR_B[16]
+
+   DECL INT CHAR_C_N
+   DECL CHARPT CHAR_C[12]
+
+   DECL INT CHAR_D_N
+   DECL CHARPT CHAR_D[12]
+
+   DECL INT CHAR_E_N
+   DECL CHARPT CHAR_E[16]
+
+   DECL INT CHAR_F_N
+   DECL CHARPT CHAR_F[16]
+
+
+   ; ====== DEFAULT VALUES ======
+   SCALE        = 1.0
+   OFFSET_X     = 0.0
+   OFFSET_Y     = 0.0
+
+   Z_UP         = 50.0
+   Z_DOWN       = 0.0
+
+   CHAR_SPACING = 120.0
+
+   DRAW_VEL_CP  = 0.20
+   DRAW_ACC_CP  = 50.0
+   BLEND_CDIS   = 5.0
+   ADVANCE_RUN  = 3
+
+   DEFAULT_TEXT[] = "ABCDEF"
+
+   ; Ajusta isto para o teu “ponto P4” (origem do desenho)
+   START_POS = {X 0.0, Y 0.0, Z 50.0, A 0.0, B 90.0, C 0.0}
+
+
+   ; ====== LETTER DATA (EXEMPLO) ======
+   ; Nota: estes pontos são placeholders coerentes com a tua estrutura.
+   ; Troca pelos teus pontos reais (X,Y) e PEN_DOWN conforme quiseres.
+
+   ; --- A (5 points) ---
+   CHAR_A_N = 5
+   CHAR_A[1] = {X 0.0,   Y 0.0,   PEN_DOWN FALSE}
+   CHAR_A[2] = {X 0.0,   Y 100.0, PEN_DOWN TRUE}
+   CHAR_A[3] = {X 50.0,  Y 150.0, PEN_DOWN TRUE}
+   CHAR_A[4] = {X 100.0, Y 100.0, PEN_DOWN TRUE}
+   CHAR_A[5] = {X 100.0, Y 0.0,   PEN_DOWN TRUE}
+
+   ; --- B (8 points) ---
+   CHAR_B_N = 8
+   CHAR_B[1] = {X 0.0,  Y 0.0,   PEN_DOWN FALSE}
+   CHAR_B[2] = {X 0.0,  Y 150.0, PEN_DOWN TRUE}
+   CHAR_B[3] = {X 70.0, Y 150.0, PEN_DOWN TRUE}
+   CHAR_B[4] = {X 80.0, Y 120.0, PEN_DOWN TRUE}
+   CHAR_B[5] = {X 70.0, Y 90.0,  PEN_DOWN TRUE}
+   CHAR_B[6] = {X 80.0, Y 60.0,  PEN_DOWN TRUE}
+   CHAR_B[7] = {X 70.0, Y 30.0,  PEN_DOWN TRUE}
+   CHAR_B[8] = {X 0.0,  Y 0.0,   PEN_DOWN TRUE}
+
+   ; --- C (6 points) ---
+   CHAR_C_N = 6
+   CHAR_C[1] = {X 100.0, Y 150.0, PEN_DOWN FALSE}
+   CHAR_C[2] = {X 20.0,  Y 150.0, PEN_DOWN TRUE}
+   CHAR_C[3] = {X 0.0,   Y 120.0, PEN_DOWN TRUE}
+   CHAR_C[4] = {X 0.0,   Y 30.0,  PEN_DOWN TRUE}
+   CHAR_C[5] = {X 20.0,  Y 0.0,   PEN_DOWN TRUE}
+   CHAR_C[6] = {X 100.0, Y 0.0,   PEN_DOWN TRUE}
+
+   ; --- D (6 points) ---
+   CHAR_D_N = 6
+   CHAR_D[1] = {X 0.0,   Y 0.0,   PEN_DOWN FALSE}
+   CHAR_D[2] = {X 0.0,   Y 150.0, PEN_DOWN TRUE}
+   CHAR_D[3] = {X 70.0,  Y 140.0, PEN_DOWN TRUE}
+   CHAR_D[4] = {X 100.0, Y 75.0,  PEN_DOWN TRUE}
+   CHAR_D[5] = {X 70.0,  Y 10.0,  PEN_DOWN TRUE}
+   CHAR_D[6] = {X 0.0,   Y 0.0,   PEN_DOWN TRUE}
+
+   ; --- E (8 points) ---
+   CHAR_E_N = 8
+   CHAR_E[1] = {X 100.0, Y 150.0, PEN_DOWN FALSE}
+   CHAR_E[2] = {X 0.0,   Y 150.0, PEN_DOWN TRUE}
+   CHAR_E[3] = {X 0.0,   Y 0.0,   PEN_DOWN TRUE}
+   CHAR_E[4] = {X 100.0, Y 0.0,   PEN_DOWN TRUE}
+   CHAR_E[5] = {X 0.0,   Y 75.0,  PEN_DOWN FALSE}
+   CHAR_E[6] = {X 80.0,  Y 75.0,  PEN_DOWN TRUE}
+   CHAR_E[7] = {X 0.0,   Y 75.0,  PEN_DOWN FALSE}
+   CHAR_E[8] = {X 0.0,   Y 75.0,  PEN_DOWN FALSE}
+
+   ; --- F (6 points) ---
+   CHAR_F_N = 6
+   CHAR_F[1] = {X 0.0,   Y 0.0,   PEN_DOWN FALSE}
+   CHAR_F[2] = {X 0.0,   Y 150.0, PEN_DOWN TRUE}
+   CHAR_F[3] = {X 100.0, Y 150.0, PEN_DOWN TRUE}
+   CHAR_F[4] = {X 0.0,   Y 150.0, PEN_DOWN FALSE}
+   CHAR_F[5] = {X 0.0,   Y 75.0,  PEN_DOWN TRUE}
+   CHAR_F[6] = {X 80.0,  Y 75.0,  PEN_DOWN TRUE}
+
+ENDDAT
