@@ -66,13 +66,11 @@ DEFDAT writingLetters
 
    DEFAULT_TEXT[] = "ABCDEF"
 
-   ; Ajusta isto para o teu “ponto P4” (origem do desenho)
+   
    START_POS = {X 0.0, Y 0.0, Z 50.0, A 0.0, B 90.0, C 0.0}
 
 
-   ; ====== LETTER DATA (EXEMPLO) ======
-   ; Nota: estes pontos são placeholders coerentes com a tua estrutura.
-   ; Troca pelos teus pontos reais (X,Y) e PEN_DOWN conforme quiseres.
+
 
    ; --- A (5 points) ---
    CHAR_A_N = 5
